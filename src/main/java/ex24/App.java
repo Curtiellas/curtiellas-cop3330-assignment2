@@ -6,6 +6,7 @@ package ex24;
  */
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 class App
@@ -16,11 +17,14 @@ class App
 
         System.out.println( "Enter two strings and I'll tell you if they are anagrams:" );
         System.out.print( "Enter the first string: " );
-        String word1 = sc.nextLine();
+        String word1 = sc.nextLine().toLowerCase();
         System.out.print( "Enter the second string: " );
-        String word2 = sc.nextLine();
+        String word2 = sc.nextLine().toLowerCase();
 
-        if (isAnagram (word1, word2))
+        if (word1.isEmpty() || word2.isEmpty())
+            System.out.print("One of the strings is non-existent");
+
+        else if (isAnagram (word1, word2))
             System.out.printf("\"%s\" and \"%s\" are anagrams", word1, word2);
 
         else
@@ -33,10 +37,10 @@ class App
         if (word1.length() != word2.length())
             return false;
 
-        //turning strings into char arrays so I can replace the matched chars
-        //this way the same exact letter is not matched again
+        //turning strings into char arrays so I can replace the matched chars,
+        //this way the same exact letter is not matched more than once,
         //this remedies a case such as "oopp" = "ooop",
-        //and would no longer output a false positive
+        //which would no longer output a false positive
         char[] charArray1 = word1.toCharArray();
         char[] charArray2 = word2.toCharArray();
 
@@ -54,6 +58,8 @@ class App
                 {
                     charArray2[b] = '#';
                     match = 1;
+
+                    break;
                 }
             }
 

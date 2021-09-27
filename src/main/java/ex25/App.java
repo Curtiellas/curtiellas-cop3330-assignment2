@@ -49,18 +49,18 @@ public class App {
             EightChars = 1;
 
         for (int a = 0; a < password.length(); a++) {
+
             //does it contain a number?
             if (Character.isDigit(charArray[a]))
                 containsNumber++;
 
-                //does it contain a letter?
+            //does it contain a letter?
             else if (Character.isLetter(charArray[a]))
                 containsLetter++;
 
-                //does it contain a special character?
+            //does it contain a special character?
             else if (!Character.isWhitespace(charArray[a]))
                 containsSpecial++;
-
         }
 
         //very weak

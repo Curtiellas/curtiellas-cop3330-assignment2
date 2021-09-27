@@ -10,11 +10,10 @@ import java.util.*;
 public class InputValidation {
     public static void main(String[] args) {
 
-        if (validateFunction())
-            System.out.println("There were no errors found.");
+        System.out.println(validateFunction());
     }
 
-    public static boolean validateFunction() {
+    public static String validateFunction() {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter the first name: ");
@@ -38,26 +37,32 @@ public class InputValidation {
         boolean correctIDFormat = cif(ID);
         boolean numberZIP = nz(ZIP);
 
-        if (!firstNameFilled)
-            System.out.println("The first name must be filled in.");
+        //no errors, all checks passed
+        if (firstNameFilled && lastNameFilled && firstOverTwoChar && lastOverTwoChar && correctIDFormat && numberZIP)
+            return "There were no errors found.";
 
-        if (!lastNameFilled)
-            System.out.println("The last name must be filled in.");
+        StringBuilder output = new StringBuilder();
 
         if (!firstOverTwoChar)
-            System.out.println("The first name must be at least 2 characters long.");
+            output.append("The first name must be at least 2 characters long.\n");
 
         if (!lastOverTwoChar)
-            System.out.println("The last name must be at least 2 characters long.");
+            output.append("The last name must be at least 2 characters long.\n");
+
+        if (!firstNameFilled)
+            output.append("The first name must be filled in.\n");
+
+        if (!lastNameFilled)
+            output.append("The last name must be filled in.\n");
 
         if (!correctIDFormat)
-            System.out.println("The employee ID must be in the format of AA-1234.");
+            output.append("The employee ID must be in the format of AA-1234.\n");
 
         if (!numberZIP)
-            System.out.println("The zipcode must be a 5 digit number.");
+            output.append("The zipcode must be a 5 digit number.\n");
 
-        //iff no input problem return true, otherwise, if input problem/s return false
-        return firstNameFilled && lastNameFilled && firstOverTwoChar && lastOverTwoChar && correctIDFormat && numberZIP;
+        //some select error messages are sent to print
+        return output.toString();
     }
 
     public static boolean fnf(String firstName) {
@@ -69,11 +74,11 @@ public class InputValidation {
     }
 
     public static boolean fotc(String firstName) {
-        return firstName.length() > 1;
+        return firstName.length() >= 2;
     }
 
     public static boolean lotc(String lastName) {
-        return lastName.length() > 1;
+        return lastName.length() >= 2;
     }
 
     public static boolean cif(String ID) {
@@ -103,6 +108,9 @@ public class InputValidation {
 
     public static boolean nz(String ZIP) {
         char[] charArray = ZIP.toCharArray();
+
+        if (ZIP.isEmpty())
+            return false;
 
         //check if it is a number
         for (int a = 0; a < ZIP.length(); a++)

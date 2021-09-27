@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class NumberInput {
+    -- Variables --
+    int[5] numArray
+    -- Functions --
+    readNumbers();
+    addNumbers();
+}
+
+class CalculatedOutput {
+    int total;
+}
+
+NumberInput --o CalculatedOutput
+@enduml

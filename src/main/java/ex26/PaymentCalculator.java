@@ -24,13 +24,12 @@ public class PaymentCalculator
         System.out.print("What is the monthly payment you can make? ");
         double payment = sc.nextDouble();
 
-        double monthsToComplete = calculateMonthsUntilPaidOff(balance, APR, payment);
-        int result = (int) Math.ceil(monthsToComplete);
+        int monthsToComplete = calculateMonthsUntilPaidOff(balance, APR, payment);
 
-        System.out.println( "It will take you " + result + " months to pay off this card." );
+        System.out.println( "It will take you " + monthsToComplete + " months to pay off this card." );
     }
 
-    public static double calculateMonthsUntilPaidOff(double b, double APR, double p)
+    public static int calculateMonthsUntilPaidOff(double b, double APR, double p)
     {
         double n;
         double i = APR/(365.0 * 100);
@@ -38,7 +37,7 @@ public class PaymentCalculator
         n = 1 + (b/p) * (1 - Math.pow((1 + i), 30));
         n = -(1/30.0) * (Math.log(n) / Math.log(1 + i));
 
-        return n;
+        return (int) Math.ceil(n);
     }
 /*
     n = -(1/30) * log(1 + b/p * (1 - (1 + i)^30)) / log(1 + i)
