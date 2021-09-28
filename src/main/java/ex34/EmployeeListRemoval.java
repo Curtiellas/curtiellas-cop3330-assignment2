@@ -23,9 +23,9 @@ public class EmployeeListRemoval {
         System.out.println("\nEnter an employee name to remove: ");
         String removeName = readString();
 
-        //new array, with removed name
-        copyToNewArray(names, removeName);
 
+
+        System.out.println( getOutput( names, removeName) );
     }
 
     public static String readString() {
@@ -34,7 +34,7 @@ public class EmployeeListRemoval {
         return sc.nextLine();
     }
 
-    public static void copyToNewArray(String[] names, String removeName) {
+    public static String getOutput(String[] names, String removeName) {
         int a;
         String[] namesNew = new String[names.length - 1];
         boolean signal = false;
@@ -53,25 +53,26 @@ public class EmployeeListRemoval {
             if (removeName.equalsIgnoreCase(names[names.length - 1]))
                 signal = true;
 
-        printOutput(names, namesNew, signal);
+        StringBuilder output = new StringBuilder();
 
-    }
-
-    public static void printOutput(String[] names, String[] namesNew, boolean signal) {
         if (signal) {
-            System.out.println("\nThere are " + namesNew.length + " employees:");
+            output.append("\nThere are ").append(namesNew.length).append(" employees:");
 
-            //new list printed
+            //list gathered
             for (String name : namesNew) {
-                System.out.println(name);
-            }
-        } else {
-            System.out.println("\nThere are " + names.length + " employees:");
-
-            //old list printed
-            for (String name : names) {
-                System.out.println(name);
+                output.append("\n").append(name);
             }
         }
+
+        else {
+            output.append("\nThere are ").append(names.length).append(" employees:");
+
+            //list gathered
+            for (String name : names) {
+                output.append("\n").append(name);
+            }
+        }
+
+        return output.toString();
     }
 }

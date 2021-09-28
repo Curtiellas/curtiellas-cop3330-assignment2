@@ -11,23 +11,32 @@ public class MultiplicationTable
 {
     public static void main( String[] args )
     {
-        for (int i = 1; i <= 12; i++) {
+        System.out.println(getTable(12));;
+    }
 
-            for (int j = 1; j <= 12; j++) {
+    public static String getTable(int size)
+    {
+        StringBuilder output = new StringBuilder();
+
+        for (int i = 1; i <= size; i++) {
+
+            for (int j = 1; j <= size; j++) {
                 if ( (i * j) < 10)
-                    System.out.print("   ");
+                    output.append("   ");
 
                 else if ( (i * j) < 100)
-                    System.out.print("  ");
+                    output.append("  ");
 
                 else if ( (i * j) < 1000)
-                    System.out.print(" ");
+                    output.append(" ");
 
-                System.out.print( (i * j) );
+                output.append( (i * j) );
             }
 
             //new line each row
-            System.out.print("\n");
+            output.append("\n");
         }
+
+        return output.toString();
     }
 }

@@ -19,10 +19,10 @@ public class MagicEightBall
         sc.nextLine(); //the question is not recorded
 
         //final output
-        System.out.println( answers[ generateRandomNumber() ] );
+        System.out.println( answers[ generateRandomNumber( answers.length ) ] );
     }
 
-    public static int generateRandomNumber()
+    public static int generateRandomNumber(int choices)
     {
         Random rnd = new Random();
 

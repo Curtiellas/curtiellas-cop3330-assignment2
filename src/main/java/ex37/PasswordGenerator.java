@@ -53,46 +53,68 @@ public class PasswordGenerator
     {
         StringBuilder password = new StringBuilder();
         int type;
+        int actualLetters = 0, actualSpecials = 0, actualNumbers = 0;
 
-        for (int i = 0; i < length; i++) {
+        while (password.length() < length || specials > 0 || numbers > 0 || (actualSpecials + actualNumbers) > actualLetters) {
 
-            //if there is just enough space for non-letters, only allow specials or numbers
-            if ( (specials + numbers) >= (length - i) && (specials + numbers) > 0 )
+            if ( password.length() >= length )
             {
-                //only numbers remain
-                if ( specials == 0 )
-                    type = 1;
+                if (specials > 0)
+                    type = 0;   //only special
 
-                //only specials remain
-                else if ( numbers == 0 )
-                    type = 0;
+                else if (numbers > 0)
+                    type = 1;   //only number
 
-                //both numbers and specials remain
+                else if ( (actualSpecials + actualNumbers) > actualLetters )
+                    type = 2;   //only letters
+
                 else
-                    type = generateRandomNumber(0, 2);
+                {
+                    System.out.println("error");
+                    break;
+                }
             }
 
-            //there is leftover space for numbers and specials, therefore allow any, including letters
             else
-                type = generateRandomNumber(0, 3);
+            {
+                if (specials <= 0 && numbers <= 0)
+                    type = 2;                                       //only letter
+
+                else if (specials <= 0)
+                    type = generateRandomNumber(1,3);   //number or letter
+
+                else if (numbers <= 0)
+                    type = 0;                                       //special only
+
+                else
+                    type = generateRandomNumber(0, 3);  //any character
+            }
 
             //option 0: special
-            if (type == 0 && specials > 0)
+            if (type == 0)
             {
                 password.append(getSpecial());
                 specials--;
+                actualSpecials++;
             }
 
             //option 1: number
-            else if (type == 1 && numbers > 0)
+            else if (type == 1)
             {
                 password.append(getNumber());
                 numbers--;
+                actualNumbers++;
             }
 
             //option 2: fill in with letter
-            else
+            else if (type == 2)
+            {
                 password.append(getLetter());
+                actualLetters++;
+            }
+
+            else
+                System.out.println("error");
         }
 
         return password.toString();
@@ -103,7 +125,7 @@ public class PasswordGenerator
     {
         Random rnd = new Random();
 
-        // 0 - (limit - 1)
+        // low - (high - 1)
         return (low + rnd.nextInt(high));
     }
 
