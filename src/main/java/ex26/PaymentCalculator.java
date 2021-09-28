@@ -13,7 +13,6 @@ public class PaymentCalculator
     public static void main( String[] args )
     {
         Scanner sc = new Scanner(System.in);
-        //DecimalFormat df = new DecimalFormat("###.###");
 
         System.out.print("What is your balance? ");
         double balance = sc.nextDouble();
@@ -26,7 +25,11 @@ public class PaymentCalculator
 
         int monthsToComplete = calculateMonthsUntilPaidOff(balance, APR, payment);
 
-        System.out.println( "It will take you " + monthsToComplete + " months to pay off this card." );
+        if (monthsToComplete < 0)
+            System.out.println("You cannot pay your debt with such a small payment.");
+
+        else
+            System.out.println( "It will take you " + monthsToComplete + " months to pay off this card." );
     }
 
     public static int calculateMonthsUntilPaidOff(double b, double APR, double p)
@@ -36,6 +39,9 @@ public class PaymentCalculator
 
         n = 1 + (b/p) * (1 - Math.pow((1 + i), 30));
         n = -(1/30.0) * (Math.log(n) / Math.log(1 + i));
+
+        if (Double.isNaN( n ))
+            return -1;
 
         return (int) Math.ceil(n);
     }

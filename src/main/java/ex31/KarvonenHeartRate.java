@@ -12,30 +12,30 @@ public class KarvonenHeartRate
     public static void main( String[] args )
     {
         System.out.print("This program will print a Karvonen Heart Rate table.\nEnter your age: ");
-        int age = readAge();
+        double age = readAge();
 
         System.out.print("Enter your resting heart rate: ");
-        int restingRate = readRestingRate();
+        double restingRate = readRestingRate();
 
         System.out.print("Intensity    | Rate\n-------------|--------\n");
 
         for (int i = 55; i <= 95; i = i + 5) {
-            System.out.println(i + "%          | " + calculateBPM(age, restingRate, i / 100.0) + " bpm");
+            System.out.println(i + "%          | " + calculateBPM(age, restingRate, i) + " bpm");
         }
     }
 
-    public static int readAge()
+    public static double readAge()
     {
         Scanner sc = new Scanner(System.in);
 
         String ageS;
-        int age;
+        double age;
 
         while (true)
         {
             try {
                 ageS = sc.next();
-                age = Integer.parseInt(ageS);
+                age = Double.parseDouble(ageS);
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid. Please enter a number greater than 0");
@@ -50,18 +50,18 @@ public class KarvonenHeartRate
             return age;
     }
 
-    public static int readRestingRate()
+    public static double readRestingRate()
     {
         Scanner sc = new Scanner(System.in);
 
         String rateS;
-        int rate;
+        double rate;
 
         while (true)
         {
             try {
                 rateS = sc.next();
-                rate = Integer.parseInt(rateS);
+                rate = Double.parseDouble(rateS);
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid. Please enter a number greater than 0");
@@ -76,12 +76,9 @@ public class KarvonenHeartRate
             return rate;
     }
 
-    public static int calculateBPM(int age, int restingRate, double intensity)
+    public static int calculateBPM(double age, double restingRate, double intensity)
     {
-        double BPM = ((((220 - age) - restingRate) * intensity) + restingRate);
-
         //TargetHeartRate = (((220 − age) − restingHR) × intensity) + restingHR
-        return (int) BPM;
-
+        return (int) Math.round( ((((220 - age) - restingRate) * (intensity / 100.0)) + restingRate) );
     }
 }

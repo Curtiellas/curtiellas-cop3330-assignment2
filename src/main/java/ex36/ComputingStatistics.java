@@ -12,7 +12,7 @@ public class ComputingStatistics
     public static void main( String[] args )
     {
         int[] responseTimes = readTimes();
-        printNumbers(responseTimes);
+        System.out.println( printNumbers(responseTimes) );
 
         double average = average(responseTimes);
 
@@ -53,16 +53,20 @@ public class ComputingStatistics
         return array;
     }
 
-    public static void printNumbers(int[] times)
+    public static String printNumbers(int[] times)
     {
-        System.out.print("Numbers: ");
+        StringBuilder output = new StringBuilder();
+
+        output.append("Numbers: ");
 
         for (int i = 0; i < times.length; i++) {
             if (i == times.length - 1)
-                System.out.print( times[i] );
+                output.append( times[i] );
             else
-                System.out.print( times[i] + ", ");
+                output.append( times[i] + ", ");
         }
+
+        return output.toString();
     }
 
     public static double average ( int [] times )
